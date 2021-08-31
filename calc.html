@@ -1,0 +1,69 @@
+<style type="text/css">
+	.btn {
+        width: 40px;
+        height: auto;
+        background: gray;
+        display: inline-block;
+        text-align: center;
+        line-height: 30px;
+        user-select: none;
+        color:  white;
+    }
+ 
+    .btn:hover {
+        background: black;
+    }
+ 
+    #calc {
+        width: 240px;
+        display: inline-block;
+    }
+ 
+    #inpField {
+        width: 100%;
+        font-size: 12pt;
+        resize: vertical;
+    }
+</style>
+<div id="calc">
+    <textarea id=inpField>0</textarea>
+</div>
+<script>
+    // набор кнопок
+    var signs = [
+        '1', '2', '3', '4',
+        '5', '6', '7', '8',
+        '9', '0', 'C', '.',
+        '=', '+', '-', '*',
+        '/', '+/-'
+    ];
+ 
+    // форма калькулятора
+    var calc = document.getElementById('calc');
+ 
+    // поле с выражением
+    var textArea = document.getElementById('inpField');
+ 
+    // добавление кнопок
+    signs.forEach(function (sign) {
+        var signElement = document.createElement('div');
+        signElement.className = 'btn';
+        signElement.innerHTML = sign;
+        calc.appendChild(signElement);
+    });
+ 
+    // добавляем функцию-обработчик при нажатии на кнопку
+    document.querySelectorAll('#calc .btn').forEach(function (button) {
+        button.addEventListener('click', onBtnClick);
+    });
+ 
+    // функция клика по кнопке калькулятора
+    function onBtnClick(e) {
+        // e.target.innerHTML - содержание элемента, по которому кликнули
+        if (e.target.innerHTML === 'C')        textArea.innerHTML = '0';
+        else if (e.target.innerHTML === '=')   textArea.innerHTML = eval(textArea.innerHTML);
+        else if (e.target.innerHTML === '+/-') textArea.innerHTML = "-("+textArea.innerHTML+")"
+        else if (textArea.innerHTML === '0')   textArea.innerHTML = e.target.innerHTML
+        else                                   textArea.innerHTML += e.target.innerHTML
+    }
+</script>
